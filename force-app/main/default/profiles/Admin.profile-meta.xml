@@ -5,6 +5,10 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
+        <classAccesses>
+        <apexClass>RaftCoordinateController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>true</editable>
@@ -244,6 +248,36 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Raft__c.Width_m__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>Pedestal__c.X_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pedestal__c.Y_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pile__c.X_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pile__c.Y_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Raft__c.Coordinates_JSON__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Raft__c.Number_of_Corners__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <objectPermissions>

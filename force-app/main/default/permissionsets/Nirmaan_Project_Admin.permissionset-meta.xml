@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+        <classAccesses>
+        <apexClass>RaftCoordinateController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>NIRMAAN 2.0 Project Administrator. Full CRUD on all NIRMAAN objects. Manages projects, packages, and analytics. No Modify All Data or View All Data granted.</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -239,6 +243,36 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Raft__c.Width_m__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>Pedestal__c.X_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pedestal__c.Y_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pile__c.X_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Pile__c.Y_Coordinate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Raft__c.Coordinates_JSON__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Raft__c.Number_of_Corners__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

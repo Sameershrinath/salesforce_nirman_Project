@@ -171,13 +171,13 @@ public with sharing class RaftCoordinateController {
                     throw new ControllerException('Point ' + pt.sequence + ' is missing a Y coordinate.');
                 }
 
-                Double xVal = Double.valueOf(pt.x);
-                Double yVal = Double.valueOf(pt.y);
-                if (Double.isNaN(xVal) || Double.isInfinite(xVal)) {
-                    throw new ControllerException('Point ' + pt.sequence + ' has an invalid X coordinate value.');
+                // Apex Decimal cannot be NaN/Infinity; guard against unreasonably large magnitudes
+                Decimal absLimit = Decimal.valueOf('1.0E15');
+                if (pt.x.abs() > absLimit) {
+                    throw new ControllerException('Point ' + pt.sequence + ' X coordinate is out of acceptable range.');
                 }
-                if (Double.isNaN(yVal) || Double.isInfinite(yVal)) {
-                    throw new ControllerException('Point ' + pt.sequence + ' has an invalid Y coordinate value.');
+                if (pt.y.abs() > absLimit) {
+                    throw new ControllerException('Point ' + pt.sequence + ' Y coordinate is out of acceptable range.');
                 }
             }
 
