@@ -6,7 +6,7 @@
         </template>
 
         <!-- Header Banner -->
-        <div class="header-banner slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+        <div class="header-banner">
             <div class="slds-media slds-media_center">
                 <div class="slds-media__figure">
                     <lightning-icon icon-name="custom:custom97" size="medium" alternative-text="Raft Geometry"></lightning-icon>
@@ -63,24 +63,22 @@
         </template>
 
         <!-- Controls Toolbar -->
-        <div class="control-bar slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
-            <div class="slds-grid slds-grid_vertical-align-center">
+        <div class="control-bar">
+            <div class="control-settings">
                 <lightning-combobox
                     name="cornerCount"
                     label="Number of Corners"
                     value={cornerCountString}
                     options={cornerOptions}
                     onchange={handleCornerCountChange}
-                    variant="label-inline"
+                    variant="standard"
                     disabled={isReadOnly}
-                    class="slds-m-right_medium">
+                    class="corner-count-select">
                 </lightning-combobox>
-                <span class="slds-text-body_small slds-text-color_weak">
-                    Supports 3 to 20 polygon corners
-                </span>
+                <span class="control-help slds-text-body_small slds-text-color_weak">Supports 3 to 20 polygon corners</span>
             </div>
 
-            <div class="slds-button-group" role="group">
+            <div class="control-actions" role="group">
                 <lightning-button
                     label="Revert"
                     icon-name="utility:undo"
@@ -101,8 +99,8 @@
         <div class="slds-p-around_medium">
             <div class="slds-grid slds-wrap slds-gutters">
                 <!-- Left Column: Coordinate Input Table -->
-                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_5-12 slds-m-bottom_small">
-                    <div class="slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
+                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_6-12 slds-m-bottom_small">
+                    <div class="section-heading slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
                         <span>Corner Coordinate Points</span>
                         <span class="slds-text-color_weak slds-text-body_small">Sequence 1..{numberOfCorners}</span>
                     </div>
@@ -158,8 +156,8 @@
                 </div>
 
                 <!-- Right Column: Interactive SVG Polygon Preview -->
-                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_7-12">
-                    <div class="slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
+                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_6-12">
+                    <div class="section-heading slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
                         <span>Raft Polygon Geometry Visualizer</span>
                         <span class="slds-text-color_weak slds-text-body_small">Engineering X/Y Plan View</span>
                     </div>

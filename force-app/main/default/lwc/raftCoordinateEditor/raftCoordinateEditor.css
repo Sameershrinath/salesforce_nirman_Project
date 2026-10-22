@@ -1,190 +1,54 @@
-:host {
-    display: block;
+/* Raft Coordinate Editor — UI-only styling. JavaScript bindings are unchanged. */
+:host { display:block; min-width:0; color:#181818; }
+.raft-card { background:#fff; border:1px solid #d8dde6; border-radius:12px; overflow:hidden; box-shadow:0 2px 5px rgba(24,24,24,.06); }
+.header-banner { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem 1.25rem; background:#173f70; color:#fff; }
+.header-banner .slds-media { min-width:0; flex:1 1 auto; }
+.header-title { margin:0; font-size:1.15rem; line-height:1.35; font-weight:700; color:#fff; overflow-wrap:anywhere; }
+.header-subtitle { display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; }
+.badge-tag { display:inline-block; max-width:100%; padding:.25rem .5rem; border:1px solid rgba(255,255,255,.22); border-radius:4px; background:rgba(255,255,255,.12); color:#f7f9fb; font-size:.75rem; line-height:1.35; overflow-wrap:anywhere; }
+.header-banner > div:last-child { flex:0 0 auto; }
+.control-bar { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1rem 1.25rem; background:#f8f9fb; border-bottom:1px solid #e5e5e5; }
+.control-settings { display:flex; align-items:flex-end; flex-wrap:wrap; gap:.65rem 1rem; flex:1 1 17rem; min-width:0; }
+.corner-count-select { width:12rem; max-width:100%; }
+.control-help { padding-bottom:.65rem; line-height:1.4; }
+.control-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:.5rem; flex:0 0 auto; }
+.control-actions lightning-button { display:inline-block; }
+.coordinates-table-container { width:100%; overflow-x:auto; border:1px solid #e5e5e5; border-radius:7px; }
+.coordinates-table-container table { width:100%; table-layout:fixed; margin:0; }
+.coordinates-table-container th { padding:.65rem .55rem; background:#f3f5f7; color:#444; font-size:.78rem; font-weight:600; white-space:normal; }
+.coordinates-table-container th:first-child { width:3.25rem; }
+.coordinates-table-container td { padding:.35rem .45rem; vertical-align:middle; }
+.coordinates-table-container td lightning-input { display:block; min-width:0; }
+.coordinate-row { border-bottom:1px solid #e5e5e5; }
+.coordinate-row:last-child { border-bottom:0; }
+.section-heading { gap:.75rem; align-items:baseline; line-height:1.4; }
+.svg-canvas-container { min-height:280px; height:clamp(280px, 34vw, 420px); overflow:hidden; border:1px solid #e1e5eb; border-radius:8px; background:#fbfcfe; }
+.svg-canvas { display:block; width:100%; height:100%; }
+.polygon-fill { fill:rgba(1,118,211,.16); stroke:#0176d3; stroke-width:2.5; stroke-linejoin:round; }
+.vertex-label { font-size:12px; font-weight:700; fill:#16325c; paint-order:stroke; stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
+.empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:280px; height:100%; padding:1.5rem; color:#5c5c5c; }
+.metric-pill { display:flex; flex-direction:column; gap:.35rem; height:100%; padding:.8rem; border:1px solid #e5e5e5; border-radius:7px; background:#fff; }
+.metric-pill-label { color:#5c5c5c; font-size:.72rem; line-height:1.35; }
+.metric-pill-value { color:#181818; font-size:1rem; font-weight:700; overflow-wrap:anywhere; }
+.modal-backdrop { position:fixed; inset:0; z-index:9000; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(8,7,7,.55); }
+.modal-dialog { width:min(100%, 32rem); background:#fff; border-radius:10px; box-shadow:0 8px 28px rgba(0,0,0,.24); }
+@media (max-width: 767px) {
+ .header-banner { align-items:flex-start; flex-direction:column; padding:.9rem 1rem; }
+ .header-banner > div:last-child { align-self:flex-start; }
+ .control-bar { align-items:stretch; flex-direction:column; padding:.9rem 1rem; }
+ .control-settings { align-items:stretch; flex-direction:column; gap:.35rem; }
+ .corner-count-select { width:100%; }
+ .control-help { padding:0; }
+ .control-actions { width:100%; justify-content:flex-end; }
+ .control-actions lightning-button { max-width:100%; }
+ .svg-canvas-container { height:300px; }
 }
-
-.raft-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    overflow: hidden;
-}
-
-.header-banner {
-    background: linear-gradient(135deg, #0b2545 0%, #134074 50%, #1d4e89 100%);
-    color: #ffffff;
-    padding: 1rem 1.25rem;
-}
-
-.header-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-}
-
-.header-subtitle {
-    font-size: 0.8125rem;
-    color: #cbd5e1;
-    margin-top: 0.25rem;
-}
-
-.badge-tag {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-}
-
-.control-bar {
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 0.75rem 1.25rem;
-}
-
-.coordinates-table-container {
-    max-height: 480px;
-    overflow-y: auto;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    background: #ffffff;
-}
-
-.coordinate-row {
-    transition: background-color 0.15s ease;
-}
-
-.coordinate-row:hover {
-    background-color: #f1f5f9;
-}
-
-.coordinate-row.highlighted {
-    background-color: #e0f2fe;
-}
-
-.seq-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #0f172a;
-    color: #ffffff;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-
-.seq-badge.first-point {
-    background: #16a34a;
-}
-
-.svg-canvas-container {
-    background: radial-gradient(circle, #f8fafc 10%, #e2e8f0 90%);
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    position: relative;
-    overflow: hidden;
-    min-height: 380px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.svg-canvas {
-    width: 100%;
-    height: 380px;
-}
-
-.polygon-fill {
-    fill: rgba(30, 64, 175, 0.18);
-    stroke: #1d4ed8;
-    stroke-width: 2.5;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    transition: all 0.2s ease;
-}
-
-.vertex-point {
-    fill: #1e3a8a;
-    stroke: #ffffff;
-    stroke-width: 2;
-    cursor: pointer;
-    transition: transform 0.15s ease, r 0.15s ease;
-}
-
-.vertex-point:hover {
-    r: 7;
-    fill: #2563eb;
-}
-
-.vertex-point.start-node {
-    fill: #16a34a;
-    stroke: #ffffff;
-    stroke-width: 2.5;
-}
-
-.vertex-label {
-    font-size: 11px;
-    font-weight: 700;
-    fill: #0f172a;
-    pointer-events: none;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
-}
-
-.empty-state {
-    padding: 3rem 1.5rem;
-    text-align: center;
-    color: #64748b;
-}
-
-.metric-pill {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.75rem;
-    display: inline-flex;
-    flex-direction: column;
-}
-
-.metric-pill-label {
-    color: #64748b;
-    font-weight: 500;
-    text-transform: uppercase;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-}
-
-.metric-pill-value {
-    color: #0f172a;
-    font-weight: 700;
-    font-size: 0.9rem;
-    margin-top: 0.1rem;
-}
-
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 23, 42, 0.65);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-dialog {
-    background: #ffffff;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 480px;
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+@media (max-width: 480px) {
+ .coordinates-table-container th { padding:.5rem .3rem; font-size:.7rem; }
+ .coordinates-table-container td { padding:.25rem .25rem; }
+ .coordinates-table-container th:first-child { width:2.5rem; }
+ .section-heading { align-items:flex-start; flex-direction:column; gap:.2rem; }
+ .metric-pill { padding:.55rem; }
+ .metric-pill-label { font-size:.66rem; }
+ .metric-pill-value { font-size:.85rem; }
 }
