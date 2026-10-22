@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Element_Lookup_Required_By_Type</fullName>
+    <active>true</active>
+    <description>Ensures the correct element lookup is populated based on the Related Element Type selection.</description>
+    <errorConditionFormula>OR(
+  AND(ISPICKVAL(Related_Element_Type__c, 'Pile'), ISBLANK(Pile__c)),
+  AND(ISPICKVAL(Related_Element_Type__c, 'Raft'), ISBLANK(Raft__c)),
+  AND(ISPICKVAL(Related_Element_Type__c, 'Pedestal'), ISBLANK(Pedestal__c))
+)</errorConditionFormula>
+    <errorMessage>Please populate the element lookup field matching the Related Element Type selected (Pile, Raft, or Pedestal).</errorMessage>
+</ValidationRule>

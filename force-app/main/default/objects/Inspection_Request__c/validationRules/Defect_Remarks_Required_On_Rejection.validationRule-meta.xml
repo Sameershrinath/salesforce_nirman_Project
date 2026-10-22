@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Defect_Remarks_Required_On_Rejection</fullName>
+    <active>true</active>
+    <description>Requires Defect / Condition Remarks to be populated when the inspection is rejected or given a conditional clearance, ensuring a documented reason exists.</description>
+    <errorConditionFormula>AND(
+  OR(
+    ISPICKVAL(Status__c, 'Rejected / Rework'),
+    ISPICKVAL(Status__c, 'Conditional Clearance')
+  ),
+  ISBLANK(Defect_Remarks__c)
+)</errorConditionFormula>
+    <errorDisplayField>Defect_Remarks__c</errorDisplayField>
+    <errorMessage>Defect / Condition Remarks are required when Status is Rejected / Rework or Conditional Clearance.</errorMessage>
+</ValidationRule>

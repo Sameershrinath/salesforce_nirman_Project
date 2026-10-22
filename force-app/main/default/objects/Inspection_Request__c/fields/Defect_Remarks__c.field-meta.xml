@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Defect_Remarks__c</fullName>
+    <description>Detailed remarks on defects found, non-conformances raised, or conditions attached to clearance. Mandatory when status is Rejected / Rework or Conditional Clearance.</description>
+    <label>Defect / Condition Remarks</label>
+    <length>2000</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

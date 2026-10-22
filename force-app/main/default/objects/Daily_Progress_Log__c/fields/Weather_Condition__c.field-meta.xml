@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weather_Condition__c</fullName>
+    <description>Prevailing weather conditions during this shift. Used for hindrance analysis and as-built records.</description>
+    <label>Weather Condition</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Clear</fullName>
+                <default>true</default>
+                <label>Clear</label>
+            </value>
+            <value>
+                <fullName>Rainy / Halted</fullName>
+                <default>false</default>
+                <label>Rainy / Halted</label>
+            </value>
+            <value>
+                <fullName>Extreme Heat</fullName>
+                <default>false</default>
+                <label>Extreme Heat</label>
+            </value>
+            <value>
+                <fullName>Overcast</fullName>
+                <default>false</default>
+                <label>Overcast</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

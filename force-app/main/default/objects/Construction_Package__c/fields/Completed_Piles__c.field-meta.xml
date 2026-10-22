@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Completed_Piles__c</fullName>
+    <description>Roll-up summary: count of Pile records with Status = Completed under this package.</description>
+    <label>Completed Piles</label>
+    <summaryFilterItems>
+        <field>Pile__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Completed</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Pile__c.Construction_Package__c</summaryForeignKey>
+    <summaryOperation>COUNT</summaryOperation>
+    <type>Summary</type>
+</CustomField>

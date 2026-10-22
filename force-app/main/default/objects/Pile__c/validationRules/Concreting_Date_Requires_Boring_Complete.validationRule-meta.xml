@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Concreting_Date_Requires_Boring_Complete</fullName>
+    <active>true</active>
+    <description>Ensures a Concreting Date is not recorded before the Boring Date.</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Concreting_Date__c)),
+  NOT(ISBLANK(Boring_Date__c)),
+  Concreting_Date__c &lt; Boring_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Concreting_Date__c</errorDisplayField>
+    <errorMessage>Concreting Date cannot be earlier than the Boring Date.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_Stage__c</fullName>
+    <description>The specific construction activity or stage of work captured in this DPR entry.</description>
+    <label>Activity Stage</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Boring</fullName>
+                <default>false</default>
+                <label>Boring</label>
+            </value>
+            <value>
+                <fullName>Rebar Placement</fullName>
+                <default>false</default>
+                <label>Rebar Placement</label>
+            </value>
+            <value>
+                <fullName>Formwork</fullName>
+                <default>false</default>
+                <label>Formwork</label>
+            </value>
+            <value>
+                <fullName>Concrete Pouring</fullName>
+                <default>false</default>
+                <label>Concrete Pouring</label>
+            </value>
+            <value>
+                <fullName>Curing</fullName>
+                <default>false</default>
+                <label>Curing</label>
+            </value>
+            <value>
+                <fullName>Chipping / Grouting</fullName>
+                <default>false</default>
+                <label>Chipping / Grouting</label>
+            </value>
+            <value>
+                <fullName>Excavation</fullName>
+                <default>false</default>
+                <label>Excavation</label>
+            </value>
+            <value>
+                <fullName>PCC / Mud Mat</fullName>
+                <default>false</default>
+                <label>PCC / Mud Mat</label>
+            </value>
+            <value>
+                <fullName>Waterproofing</fullName>
+                <default>false</default>
+                <label>Waterproofing</label>
+            </value>
+            <value>
+                <fullName>Anchor Bolt Fixing</fullName>
+                <default>false</default>
+                <label>Anchor Bolt Fixing</label>
+            </value>
+            <value>
+                <fullName>Survey</fullName>
+                <default>false</default>
+                <label>Survey</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

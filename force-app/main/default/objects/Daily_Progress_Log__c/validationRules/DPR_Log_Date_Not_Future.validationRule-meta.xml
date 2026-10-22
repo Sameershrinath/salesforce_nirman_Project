@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DPR_Log_Date_Not_Future</fullName>
+    <active>true</active>
+    <description>Prevents DPR entries from being logged for a future date.</description>
+    <errorConditionFormula>Log_Date__c &gt; TODAY()</errorConditionFormula>
+    <errorDisplayField>Log_Date__c</errorDisplayField>
+    <errorMessage>DPR entries cannot be created for a future date. Log Date must be today or earlier.</errorMessage>
+</ValidationRule>

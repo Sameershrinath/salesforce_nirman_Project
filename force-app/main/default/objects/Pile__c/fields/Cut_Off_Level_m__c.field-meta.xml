@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cut_Off_Level_m__c</fullName>
+    <description>Design cut-off level (COL) of the pile in metres relative to site datum. Rebar is cut to this level after concreting.</description>
+    <label>Cut-Off Level (m)</label>
+    <precision>8</precision>
+    <required>false</required>
+    <scale>3</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

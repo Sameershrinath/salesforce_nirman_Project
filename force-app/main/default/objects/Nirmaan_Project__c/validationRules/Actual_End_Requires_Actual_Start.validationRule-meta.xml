@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_End_Requires_Actual_Start</fullName>
+    <active>true</active>
+    <description>Prevents Actual End Date being set without an Actual Start Date.</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Actual_End_Date__c)),
+  ISBLANK(Actual_Start_Date__c)
+)</errorConditionFormula>
+    <errorDisplayField>Actual_End_Date__c</errorDisplayField>
+    <errorMessage>Actual End Date cannot be set without an Actual Start Date.</errorMessage>
+</ValidationRule>

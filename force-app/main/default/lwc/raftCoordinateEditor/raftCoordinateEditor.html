@@ -1,0 +1,264 @@
+<template>
+    <div class="raft-card slds-m-bottom_medium">
+        <!-- Loading Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading Raft Geometry..." size="medium"></lightning-spinner>
+        </template>
+
+        <!-- Header Banner -->
+        <div class="header-banner slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="custom:custom97" size="medium" alternative-text="Raft Geometry"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="header-title">{raftTitle}</h2>
+                    <div class="header-subtitle slds-m-top_xx-small">
+                        <span class="badge-tag slds-m-right_x-small">Package: {packageName}</span>
+                        <template if:true={raftNumber}>
+                            <span class="badge-tag">Raft No: {raftNumber}</span>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <template if:true={hasValidGeometry}>
+                    <span class="slds-badge slds-theme_success">
+                        <lightning-icon icon-name="utility:check" size="xx-small" class="slds-m-right_xx-small" variant="inverse"></lightning-icon>
+                        Valid Geometry ({numberOfCorners} Points)
+                    </span>
+                </template>
+                <template if:false={hasValidGeometry}>
+                    <span class="slds-badge slds-theme_warning">
+                        <lightning-icon icon-name="utility:warning" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                        Incomplete Points
+                    </span>
+                </template>
+            </div>
+        </div>
+
+        <!-- Inline Error Banner -->
+        <template if:true={errorMessage}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">Error</span>
+                <lightning-icon icon-name="utility:error" size="x-small" class="slds-m-right_x-small" variant="inverse"></lightning-icon>
+                <h2>{errorMessage}</h2>
+                <div class="slds-notify__close">
+                    <lightning-button-icon icon-name="utility:close" variant="bare-inverse" onclick={handleClearError} alternative-text="Dismiss"></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+
+        <!-- Inline Success Banner -->
+        <template if:true={successMessage}>
+            <div class="slds-notify slds-notify_alert slds-alert_success" role="alert">
+                <span class="slds-assistive-text">Success</span>
+                <lightning-icon icon-name="utility:success" size="x-small" class="slds-m-right_x-small" variant="inverse"></lightning-icon>
+                <h2>{successMessage}</h2>
+                <div class="slds-notify__close">
+                    <lightning-button-icon icon-name="utility:close" variant="bare-inverse" onclick={handleClearSuccess} alternative-text="Dismiss"></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+
+        <!-- Controls Toolbar -->
+        <div class="control-bar slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+            <div class="slds-grid slds-grid_vertical-align-center">
+                <lightning-combobox
+                    name="cornerCount"
+                    label="Number of Corners"
+                    value={cornerCountString}
+                    options={cornerOptions}
+                    onchange={handleCornerCountChange}
+                    variant="label-inline"
+                    disabled={isReadOnly}
+                    class="slds-m-right_medium">
+                </lightning-combobox>
+                <span class="slds-text-body_small slds-text-color_weak">
+                    Supports 3 to 20 polygon corners
+                </span>
+            </div>
+
+            <div class="slds-button-group" role="group">
+                <lightning-button
+                    label="Revert"
+                    icon-name="utility:undo"
+                    onclick={handleRevert}
+                    disabled={isRevertDisabled}>
+                </lightning-button>
+                <lightning-button
+                    label="Save Geometry"
+                    icon-name="utility:save"
+                    variant="brand"
+                    onclick={handleSave}
+                    disabled={isSaveDisabled}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <!-- Main Body: Two Columns (Coordinates Table + SVG Visualizer) -->
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-wrap slds-gutters">
+                <!-- Left Column: Coordinate Input Table -->
+                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_5-12 slds-m-bottom_small">
+                    <div class="slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
+                        <span>Corner Coordinate Points</span>
+                        <span class="slds-text-color_weak slds-text-body_small">Sequence 1..{numberOfCorners}</span>
+                    </div>
+
+                    <div class="coordinates-table-container">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th style="width: 50px;" class="slds-text-align_center" scope="col">#</th>
+                                    <th scope="col">X Coordinate (m)</th>
+                                    <th scope="col">Y Coordinate (m)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={points} for:item="pt">
+                                    <tr key={pt.sequence} class="coordinate-row">
+                                        <td class="slds-text-align_center">
+                                            <span class={pt.badgeClass}>{pt.sequence}</span>
+                                        </td>
+                                        <td>
+                                            <lightning-input
+                                                type="number"
+                                                step="0.001"
+                                                variant="label-hidden"
+                                                label={pt.xLabel}
+                                                data-sequence={pt.sequence}
+                                                data-axis="x"
+                                                value={pt.x}
+                                                placeholder="e.g. 100.0"
+                                                disabled={isReadOnly}
+                                                onchange={handleCoordinateChange}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>
+                                            <lightning-input
+                                                type="number"
+                                                step="0.001"
+                                                variant="label-hidden"
+                                                label={pt.yLabel}
+                                                data-sequence={pt.sequence}
+                                                data-axis="y"
+                                                value={pt.y}
+                                                placeholder="e.g. 100.0"
+                                                disabled={isReadOnly}
+                                                onchange={handleCoordinateChange}>
+                                            </lightning-input>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive SVG Polygon Preview -->
+                <div class="slds-col slds-size_1-1 slds-medium-size_6-12 slds-large-size_7-12">
+                    <div class="slds-text-title_bold slds-m-bottom_x-small slds-grid slds-grid_align-spread">
+                        <span>Raft Polygon Geometry Visualizer</span>
+                        <span class="slds-text-color_weak slds-text-body_small">Engineering X/Y Plan View</span>
+                    </div>
+
+                    <div class="svg-canvas-container">
+                        <template if:true={hasValidGeometry}>
+                            <svg class="svg-canvas" viewBox={svgViewBox} preserveAspectRatio="xMidYMid meet">
+                                <!-- Background grid lines -->
+                                <defs>
+                                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)"/>
+
+                                <!-- Closed Polygon -->
+                                <polygon points={svgPointsString} class="polygon-fill"/>
+
+                                <!-- Vertex Points and Labels -->
+                                <template for:each={svgVertices} for:item="vertex">
+                                    <g key={vertex.sequence}>
+                                        <circle
+                                            cx={vertex.svgX}
+                                            cy={vertex.svgY}
+                                            r="5"
+                                            class={vertex.circleClass}>
+                                            <title>Point {vertex.sequence}: ({vertex.rawX}, {vertex.rawY})</title>
+                                        </circle>
+                                        <text
+                                            x={vertex.labelX}
+                                            y={vertex.labelY}
+                                            class="vertex-label"
+                                            text-anchor="middle">
+                                            {vertex.sequence}
+                                        </text>
+                                    </g>
+                                </template>
+                            </svg>
+                        </template>
+
+                        <!-- Incomplete State Placeholder -->
+                        <template if:false={hasValidGeometry}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="utility:preview" size="large" class="slds-m-bottom_small" variant="weak"></lightning-icon>
+                                <p class="slds-text-heading_small slds-m-bottom_xx-small">Incomplete Coordinate Geometry</p>
+                                <p class="slds-text-body_small">
+                                    Enter valid numeric X and Y coordinate values for all {numberOfCorners} corners to preview the closed raft foundation boundary polygon.
+                                </p>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Geometry Metrics Card -->
+                    <template if:true={hasValidGeometry}>
+                        <div class="slds-m-top_small slds-grid slds-wrap slds-gutters_x-small">
+                            <div class="slds-col slds-size_1-3">
+                                <div class="metric-pill slds-size_1-1">
+                                    <span class="metric-pill-label">Bounding Width (X)</span>
+                                    <span class="metric-pill-value">{geometryMetrics.width} m</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-3">
+                                <div class="metric-pill slds-size_1-1">
+                                    <span class="metric-pill-label">Bounding Length (Y)</span>
+                                    <span class="metric-pill-value">{geometryMetrics.height} m</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-3">
+                                <div class="metric-pill slds-size_1-1">
+                                    <span class="metric-pill-label">Perimeter</span>
+                                    <span class="metric-pill-value">{geometryMetrics.perimeter} m</span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Corner Reduction Warning Modal -->
+        <template if:true={showReductionWarningModal}>
+            <div class="modal-backdrop">
+                <div class="modal-dialog slds-p-around_medium" role="dialog" aria-modal="true">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                        <lightning-icon icon-name="utility:warning" variant="warning" size="small" class="slds-m-right_x-small"></lightning-icon>
+                        <h3 class="slds-text-heading_small slds-text-title_bold">Discard Points Confirmation</h3>
+                    </div>
+                    <p class="slds-m-bottom_medium slds-text-body_regular">
+                        Reducing the corner count from <strong>{currentCornerCount}</strong> to <strong>{pendingCornerCount}</strong> will discard the coordinate values for points {pointsToDiscardDescription}.
+                    </p>
+                    <p class="slds-m-bottom_medium slds-text-color_error slds-text-body_small">
+                        This action cannot be undone once saved. Are you sure you want to proceed?
+                    </p>
+                    <div class="slds-grid slds-grid_align-end">
+                        <lightning-button label="Cancel" onclick={handleCancelCornerReduction} class="slds-m-right_x-small"></lightning-button>
+                        <lightning-button label="Discard and Reduce" variant="destructive" onclick={handleConfirmCornerReduction}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

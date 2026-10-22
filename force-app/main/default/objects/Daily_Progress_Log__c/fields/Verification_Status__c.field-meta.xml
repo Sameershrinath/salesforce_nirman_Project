@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verification_Status__c</fullName>
+    <description>Verification workflow status for this DPR entry. Supervisors submit drafts; site engineers verify; flagged records are escalated for audit.</description>
+    <label>Verification Status</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Draft / Supervisor Submitted</fullName>
+                <default>true</default>
+                <label>Draft / Supervisor Submitted</label>
+            </value>
+            <value>
+                <fullName>Verified by NTPC Engineer</fullName>
+                <default>false</default>
+                <label>Verified by NTPC Engineer</label>
+            </value>
+            <value>
+                <fullName>Flagged for Audit</fullName>
+                <default>false</default>
+                <label>Flagged for Audit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

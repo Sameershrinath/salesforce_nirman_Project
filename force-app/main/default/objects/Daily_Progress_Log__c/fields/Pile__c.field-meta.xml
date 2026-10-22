@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pile__c</fullName>
+    <description>Optional lookup to a specific Pile element this DPR entry records progress against.</description>
+    <label>Pile</label>
+    <referenceTo>Pile__c</referenceTo>
+    <relationshipLabel>Daily Progress Logs</relationshipLabel>
+    <relationshipName>Daily_Progress_Logs</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

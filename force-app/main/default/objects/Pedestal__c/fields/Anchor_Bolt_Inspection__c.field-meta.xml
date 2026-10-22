@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Anchor_Bolt_Inspection__c</fullName>
+    <description>Status of the anchor bolt placement inspection and survey verification for this pedestal.</description>
+    <label>Anchor Bolt Inspection</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pending</fullName>
+                <default>true</default>
+                <label>Pending</label>
+            </value>
+            <value>
+                <fullName>Survey Verified</fullName>
+                <default>false</default>
+                <label>Survey Verified</label>
+            </value>
+            <value>
+                <fullName>Rectification Required</fullName>
+                <default>false</default>
+                <label>Rectification Required</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

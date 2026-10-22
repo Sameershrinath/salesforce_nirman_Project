@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage__c</fullName>
+    <description>The specific quality inspection stage or milestone being reviewed in this RFI.</description>
+    <label>Inspection Stage</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Soil Bearing Capacity Check</fullName>
+                <default>false</default>
+                <label>Soil Bearing Capacity Check</label>
+            </value>
+            <value>
+                <fullName>Rebar Inspection</fullName>
+                <default>false</default>
+                <label>Rebar Inspection</label>
+            </value>
+            <value>
+                <fullName>Formwork and Line Level Survey</fullName>
+                <default>false</default>
+                <label>Formwork and Line Level Survey</label>
+            </value>
+            <value>
+                <fullName>Anchor Bolt Placement</fullName>
+                <default>false</default>
+                <label>Anchor Bolt Placement</label>
+            </value>
+            <value>
+                <fullName>Pre-Pour Clearance (Pour Card)</fullName>
+                <default>false</default>
+                <label>Pre-Pour Clearance (Pour Card)</label>
+            </value>
+            <value>
+                <fullName>7-Day Cube Strength Test</fullName>
+                <default>false</default>
+                <label>7-Day Cube Strength Test</label>
+            </value>
+            <value>
+                <fullName>28-Day Cube Strength Test</fullName>
+                <default>false</default>
+                <label>28-Day Cube Strength Test</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

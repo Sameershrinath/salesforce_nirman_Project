@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nirmaan_Project__c</fullName>
+    <description>Master-Detail relationship to the parent Nirmaan Project. All packages must belong to a project.</description>
+    <label>Nirmaan Project</label>
+    <referenceTo>Nirmaan_Project__c</referenceTo>
+    <relationshipLabel>Construction Packages</relationshipLabel>
+    <relationshipName>Construction_Packages</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

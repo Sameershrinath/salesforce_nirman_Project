@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Piles__c</fullName>
+    <description>Roll-up summary: total count of Pile records belonging to this package.</description>
+    <label>Total Piles</label>
+    <summaryForeignKey>Pile__c.Construction_Package__c</summaryForeignKey>
+    <summaryOperation>COUNT</summaryOperation>
+    <type>Summary</type>
+</CustomField>

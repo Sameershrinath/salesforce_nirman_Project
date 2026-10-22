@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Current construction lifecycle stage of the package.</description>
+    <label>Status</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+                <label>Not Started</label>
+            </value>
+            <value>
+                <fullName>Mobilization</fullName>
+                <default>false</default>
+                <label>Mobilization</label>
+            </value>
+            <value>
+                <fullName>Excavation</fullName>
+                <default>false</default>
+                <label>Excavation</label>
+            </value>
+            <value>
+                <fullName>Substructure / Foundations</fullName>
+                <default>false</default>
+                <label>Substructure / Foundations</label>
+            </value>
+            <value>
+                <fullName>Superstructure</fullName>
+                <default>false</default>
+                <label>Superstructure</label>
+            </value>
+            <value>
+                <fullName>Finishing / Handover</fullName>
+                <default>false</default>
+                <label>Finishing / Handover</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Executing_Agency__c</fullName>
+    <description>Primary EPC contractor or executing agency responsible for this construction package. Example: BHEL, L&amp;T, Tata Projects.</description>
+    <label>Executing Agency</label>
+    <length>100</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Text</type>
+</CustomField>

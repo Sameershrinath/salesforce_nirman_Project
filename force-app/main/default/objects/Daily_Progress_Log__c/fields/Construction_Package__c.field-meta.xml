@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Construction_Package__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Lookup to the Construction Package this DPR entry relates to. Required. Delete restricted to preserve DPR audit trail.</description>
+    <label>Construction Package</label>
+    <referenceTo>Construction_Package__c</referenceTo>
+    <relationshipLabel>Daily Progress Logs</relationshipLabel>
+    <relationshipName>Daily_Progress_Logs</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

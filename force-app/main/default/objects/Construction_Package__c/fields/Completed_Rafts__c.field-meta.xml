@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Completed_Rafts__c</fullName>
+    <description>Roll-up summary: count of Raft records with Status = Cast and Cured under this package.</description>
+    <label>Completed Rafts</label>
+    <summaryFilterItems>
+        <field>Raft__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Cast and Cured</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Raft__c.Construction_Package__c</summaryForeignKey>
+    <summaryOperation>COUNT</summaryOperation>
+    <type>Summary</type>
+</CustomField>

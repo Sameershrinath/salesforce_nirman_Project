@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nirmaan_Project__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Lookup to the Nirmaan Project this DPR entry relates to. Required. Delete restricted. Phase 2: consistency with Construction_Package__c parent project enforced via Apex/Flow.</description>
+    <label>Nirmaan Project</label>
+    <referenceTo>Nirmaan_Project__c</referenceTo>
+    <relationshipLabel>Daily Progress Logs</relationshipLabel>
+    <relationshipName>Daily_Progress_Logs</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

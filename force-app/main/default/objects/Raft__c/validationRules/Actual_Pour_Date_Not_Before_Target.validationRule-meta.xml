@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Pour_Date_Not_Before_Target</fullName>
+    <active>true</active>
+    <description>Logs an informational warning if the actual pour date is significantly before the target date. Prevents accidental data entry errors.</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Actual_Pour_Date__c)),
+  NOT(ISBLANK(Target_Pour_Date__c)),
+  Actual_Pour_Date__c &lt; Target_Pour_Date__c - 30
+)</errorConditionFormula>
+    <errorDisplayField>Actual_Pour_Date__c</errorDisplayField>
+    <errorMessage>Actual Pour Date is more than 30 days before the Target Pour Date. Please verify this date is correct before saving.</errorMessage>
+</ValidationRule>

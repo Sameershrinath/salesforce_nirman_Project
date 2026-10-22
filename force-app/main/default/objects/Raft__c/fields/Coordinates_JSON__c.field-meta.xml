@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Coordinates_JSON__c</fullName>
+    <description>Internal structured JSON array containing the ordered sequence of engineering X/Y vertex coordinates for the raft foundation geometry. Managed via the Raft Coordinate Editor Lightning Web Component.</description>
+    <label>Coordinates JSON</label>
+    <length>32768</length>
+    <trackHistory>true</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Current lifecycle status of the pile.</description>
+    <label>Status</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Drilling / Boring In-Progress</fullName>
+                <default>true</default>
+                <label>Drilling / Boring In-Progress</label>
+            </value>
+            <value>
+                <fullName>Boring Completed</fullName>
+                <default>false</default>
+                <label>Boring Completed</label>
+            </value>
+            <value>
+                <fullName>Reinforcement Cage Lowered</fullName>
+                <default>false</default>
+                <label>Reinforcement Cage Lowered</label>
+            </value>
+            <value>
+                <fullName>Concreted (Tremie)</fullName>
+                <default>false</default>
+                <label>Concreted (Tremie)</label>
+            </value>
+            <value>
+                <fullName>Chipping to Cut-Off Level</fullName>
+                <default>false</default>
+                <label>Chipping to Cut-Off Level</label>
+            </value>
+            <value>
+                <fullName>NDT / Integrity Testing</fullName>
+                <default>false</default>
+                <label>NDT / Integrity Testing</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>Rejected / Non-Conforming</fullName>
+                <default>false</default>
+                <label>Rejected / Non-Conforming</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

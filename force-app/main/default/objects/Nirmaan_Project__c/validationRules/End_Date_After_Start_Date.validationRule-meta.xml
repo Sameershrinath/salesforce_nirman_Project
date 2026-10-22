@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date_After_Start_Date</fullName>
+    <active>true</active>
+    <description>Prevents a Target End Date being set earlier than the Target Start Date.</description>
+    <errorConditionFormula>AND(
+  NOT(ISBLANK(Target_Start_Date__c)),
+  NOT(ISBLANK(Target_End_Date__c)),
+  Target_End_Date__c &lt; Target_Start_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Target_End_Date__c</errorDisplayField>
+    <errorMessage>Target End Date cannot be earlier than Target Start Date.</errorMessage>
+</ValidationRule>

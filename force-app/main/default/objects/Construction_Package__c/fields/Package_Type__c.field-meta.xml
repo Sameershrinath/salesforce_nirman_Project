@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Package_Type__c</fullName>
+    <description>Classification of the construction package by plant area or functional system.</description>
+    <label>Package Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Boiler Area</fullName>
+                <default>false</default>
+                <label>Boiler Area</label>
+            </value>
+            <value>
+                <fullName>Turbine Generator (TG) Island</fullName>
+                <default>false</default>
+                <label>Turbine Generator (TG) Island</label>
+            </value>
+            <value>
+                <fullName>Chimney (Stack)</fullName>
+                <default>false</default>
+                <label>Chimney (Stack)</label>
+            </value>
+            <value>
+                <fullName>Cooling Tower (NDCT)</fullName>
+                <default>false</default>
+                <label>Cooling Tower (NDCT)</label>
+            </value>
+            <value>
+                <fullName>Coal Handling Plant (CHP)</fullName>
+                <default>false</default>
+                <label>Coal Handling Plant (CHP)</label>
+            </value>
+            <value>
+                <fullName>Ash Handling Plant (AHP)</fullName>
+                <default>false</default>
+                <label>Ash Handling Plant (AHP)</label>
+            </value>
+            <value>
+                <fullName>Switchyard</fullName>
+                <default>false</default>
+                <label>Switchyard</label>
+            </value>
+            <value>
+                <fullName>Offsite and Utilities</fullName>
+                <default>false</default>
+                <label>Offsite and Utilities</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

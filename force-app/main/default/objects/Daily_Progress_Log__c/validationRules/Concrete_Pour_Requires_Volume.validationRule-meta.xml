@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Concrete_Pour_Requires_Volume</fullName>
+    <active>true</active>
+    <description>Ensures that when Activity Stage is Concrete Pouring, a concrete volume is entered.</description>
+    <errorConditionFormula>AND(
+  ISPICKVAL(Activity_Stage__c, 'Concrete Pouring'),
+  OR(ISBLANK(Concrete_Quantity_Poured_m3__c), Concrete_Quantity_Poured_m3__c &lt;= 0)
+)</errorConditionFormula>
+    <errorDisplayField>Concrete_Quantity_Poured_m3__c</errorDisplayField>
+    <errorMessage>Concrete Poured (m³) must be a positive value when Activity Stage is Concrete Pouring.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Current lifecycle status of the raft foundation.</description>
+    <label>Status</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Excavation and Dressing</fullName>
+                <default>true</default>
+                <label>Excavation and Dressing</label>
+            </value>
+            <value>
+                <fullName>PCC / Mud Mat Laid</fullName>
+                <default>false</default>
+                <label>PCC / Mud Mat Laid</label>
+            </value>
+            <value>
+                <fullName>Waterproofing</fullName>
+                <default>false</default>
+                <label>Waterproofing</label>
+            </value>
+            <value>
+                <fullName>Bottom Reinforcement Binding</fullName>
+                <default>false</default>
+                <label>Bottom Reinforcement Binding</label>
+            </value>
+            <value>
+                <fullName>Top Reinforcement and Chairs Binding</fullName>
+                <default>false</default>
+                <label>Top Reinforcement and Chairs Binding</label>
+            </value>
+            <value>
+                <fullName>Shuttering / Formwork Complete</fullName>
+                <default>false</default>
+                <label>Shuttering / Formwork Complete</label>
+            </value>
+            <value>
+                <fullName>Pour Approved</fullName>
+                <default>false</default>
+                <label>Pour Approved</label>
+            </value>
+            <value>
+                <fullName>Concreting In-Progress</fullName>
+                <default>false</default>
+                <label>Concreting In-Progress</label>
+            </value>
+            <value>
+                <fullName>Cast and Cured</fullName>
+                <default>false</default>
+                <label>Cast and Cured</label>
+            </value>
+            <value>
+                <fullName>Handed Over</fullName>
+                <default>false</default>
+                <label>Handed Over</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

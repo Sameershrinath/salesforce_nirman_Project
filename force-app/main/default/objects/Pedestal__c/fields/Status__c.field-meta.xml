@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <description>Current lifecycle status of the pedestal.</description>
+    <label>Status</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Starter Bar Raised</fullName>
+                <default>true</default>
+                <label>Starter Bar Raised</label>
+            </value>
+            <value>
+                <fullName>Rebar Cage Completed</fullName>
+                <default>false</default>
+                <label>Rebar Cage Completed</label>
+            </value>
+            <value>
+                <fullName>Shuttering Erected</fullName>
+                <default>false</default>
+                <label>Shuttering Erected</label>
+            </value>
+            <value>
+                <fullName>Anchor Bolts / Insert Plates Fixed</fullName>
+                <default>false</default>
+                <label>Anchor Bolts / Insert Plates Fixed</label>
+            </value>
+            <value>
+                <fullName>Survey and Line Level Approved</fullName>
+                <default>false</default>
+                <label>Survey and Line Level Approved</label>
+            </value>
+            <value>
+                <fullName>Concreted</fullName>
+                <default>false</default>
+                <label>Concreted</label>
+            </value>
+            <value>
+                <fullName>De-shuttering and Curing</fullName>
+                <default>false</default>
+                <label>De-shuttering and Curing</label>
+            </value>
+            <value>
+                <fullName>Pocket Grouting Done</fullName>
+                <default>false</default>
+                <label>Pocket Grouting Done</label>
+            </value>
+            <value>
+                <fullName>Handed Over for Structural Erection</fullName>
+                <default>false</default>
+                <label>Handed Over for Structural Erection</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
