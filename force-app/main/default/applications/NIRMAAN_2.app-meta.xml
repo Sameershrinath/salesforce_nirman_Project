@@ -10,6 +10,7 @@
     <navType>Standard</navType>
     <tabs>Nirmaan_Project__c</tabs>
     <tabs>Construction_Package__c</tabs>
+    <tabs>Construction_Layout</tabs>
     <tabs>Pile__c</tabs>
     <tabs>Raft__c</tabs>
     <tabs>Pedestal__c</tabs>

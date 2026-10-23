@@ -1,0 +1,355 @@
+<!-- constructionLayoutViewer.html -->
+<template>
+    <!-- Error State -->
+    <template if:true={hasError}>
+        <div class="clv-error-banner slds-p-around_medium">
+            <lightning-icon icon-name="utility:error" variant="error" size="small" class="slds-m-right_x-small"></lightning-icon>
+            <span>{errorMessage}</span>
+        </div>
+    </template>
+
+    <!-- Main Workspace -->
+    <div class="clv-workspace">
+
+        <!-- ── HEADER ────────────────────────────────────────── -->
+        <header class="clv-header">
+            <div class="clv-header-left">
+                <lightning-icon icon-name="custom:custom14" size="small" class="clv-header-icon" alternative-text="Construction Layout"></lightning-icon>
+                <div class="clv-header-text">
+                    <h1 class="clv-header-title">Construction Layout</h1>
+                    <span class="clv-header-subtitle">Engineering Coordinate Visualization</span>
+                </div>
+                <template if:true={selectedPackageName}>
+                    <div class="clv-header-badge">
+                        <span class="clv-badge-pkg">{selectedPackageName}</span>
+                        <template if:true={selectedProjectName}>
+                            <span class="clv-badge-sep">·</span>
+                            <span class="clv-badge-proj">{selectedProjectName}</span>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <div class="clv-header-right">
+                <template if:true={lastRefreshed}>
+                    <span class="clv-refresh-time">Refreshed {lastRefreshed}</span>
+                </template>
+                <lightning-button-icon
+                    icon-name="utility:refresh"
+                    variant="bare"
+                    size="small"
+                    tooltip="Refresh data"
+                    onclick={handleRefresh}
+                    disabled={isLoading}
+                    class="clv-refresh-btn">
+                </lightning-button-icon>
+            </div>
+        </header>
+
+        <!-- ── FILTER TOOLBAR ─────────────────────────────────── -->
+        <section class="clv-filter-bar">
+            <div class="clv-filter-row">
+
+                <!-- Package Selector -->
+                <div class="clv-filter-pkg">
+                    <lightning-combobox
+                        label="Construction Package"
+                        placeholder="Select a package…"
+                        options={packageOptions}
+                        value={selectedPackageId}
+                        onchange={handlePackageChange}
+                        disabled={isLoading}
+                        variant="label-stacked">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Structure Type Toggles -->
+                <div class="clv-filter-types">
+                    <p class="clv-filter-label">Structure Types</p>
+                    <div class="clv-toggle-row">
+                        <button class={pileBtnClass}   onclick={togglePiles}    title="Toggle Piles">
+                            <span class="clv-btn-dot clv-dot-pile"></span>Piles
+                            <span class="clv-btn-count">({pileCount})</span>
+                        </button>
+                        <button class={raftBtnClass}   onclick={toggleRafts}    title="Toggle Rafts">
+                            <span class="clv-btn-dot clv-dot-raft"></span>Rafts
+                            <span class="clv-btn-count">({raftCount})</span>
+                        </button>
+                        <button class={pedestalBtnClass} onclick={togglePedestals} title="Toggle Pedestals">
+                            <span class="clv-btn-dot clv-dot-pedestal"></span>Pedestals
+                            <span class="clv-btn-count">({pedestalCount})</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="clv-filter-status">
+                    <lightning-combobox
+                        label="Status Filter"
+                        placeholder="All Statuses"
+                        options={statusOptions}
+                        value={selectedStatus}
+                        onchange={handleStatusChange}
+                        disabled={isLoading}
+                        variant="label-stacked">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Zoom Controls -->
+                <div class="clv-filter-zoom">
+                    <p class="clv-filter-label">Canvas Controls</p>
+                    <div class="clv-toggle-row">
+                        <button class="clv-ctrl-btn" onclick={handleFitView}   title="Fit to View">
+                            <lightning-icon icon-name="utility:expand" size="x-small"></lightning-icon>
+                        </button>
+                        <button class="clv-ctrl-btn" onclick={handleZoomIn}    title="Zoom In">
+                            <lightning-icon icon-name="utility:zoomin" size="x-small"></lightning-icon>
+                        </button>
+                        <button class="clv-ctrl-btn" onclick={handleZoomOut}   title="Zoom Out">
+                            <lightning-icon icon-name="utility:zoomout" size="x-small"></lightning-icon>
+                        </button>
+                        <button class="clv-ctrl-btn" onclick={handleResetView} title="Reset View">
+                            <lightning-icon icon-name="utility:target" size="x-small"></lightning-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SUMMARY CARDS ─────────────────────────────────── -->
+        <section class="clv-summary-row">
+            <div class="clv-card clv-card-pile">
+                <div class="clv-card-icon"><lightning-icon icon-name="utility:record" size="x-small"></lightning-icon></div>
+                <div class="clv-card-body">
+                    <span class="clv-card-num">{pileCount}</span>
+                    <span class="clv-card-label">Total Piles</span>
+                </div>
+            </div>
+            <div class="clv-card clv-card-raft">
+                <div class="clv-card-icon"><lightning-icon icon-name="utility:table" size="x-small"></lightning-icon></div>
+                <div class="clv-card-body">
+                    <span class="clv-card-num">{raftCount}</span>
+                    <span class="clv-card-label">Total Rafts</span>
+                </div>
+            </div>
+            <div class="clv-card clv-card-pedestal">
+                <div class="clv-card-icon"><lightning-icon icon-name="utility:connected_apps" size="x-small"></lightning-icon></div>
+                <div class="clv-card-body">
+                    <span class="clv-card-num">{pedestalCount}</span>
+                    <span class="clv-card-label">Total Pedestals</span>
+                </div>
+            </div>
+            <div class="clv-card clv-card-valid">
+                <div class="clv-card-icon"><lightning-icon icon-name="utility:check" size="x-small" variant="success"></lightning-icon></div>
+                <div class="clv-card-body">
+                    <span class="clv-card-num">{validCoordCount}</span>
+                    <span class="clv-card-label">With Coordinates</span>
+                </div>
+            </div>
+            <div class="clv-card clv-card-missing">
+                <div class="clv-card-icon"><lightning-icon icon-name="utility:warning" size="x-small" variant="warning"></lightning-icon></div>
+                <div class="clv-card-body">
+                    <span class="clv-card-num">{missingCoordCount}</span>
+                    <span class="clv-card-label">Missing Coordinates</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── MAIN CANVAS AREA ──────────────────────────────── -->
+        <section class="clv-canvas-section">
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="clv-loading-overlay">
+                    <lightning-spinner alternative-text="Loading layout data…" size="medium"></lightning-spinner>
+                    <p class="clv-loading-text">Loading construction layout…</p>
+                </div>
+            </template>
+
+            <!-- Empty State -->
+            <template if:true={showEmptyState}>
+                <div class="clv-empty-state">
+                    <lightning-icon icon-name="utility:layers" size="large" class="clv-empty-icon"></lightning-icon>
+                    <h2 class="clv-empty-title">Select a Construction Package</h2>
+                    <p class="clv-empty-sub">Choose a package from the filter bar to visualize its Piles, Rafts, and Pedestals in the engineering plan view.</p>
+                </div>
+            </template>
+
+            <!-- No Drawable Structures -->
+            <template if:true={showNoGeometry}>
+                <div class="clv-empty-state">
+                    <lightning-icon icon-name="utility:location" size="large" class="clv-empty-icon"></lightning-icon>
+                    <h2 class="clv-empty-title">No Coordinate Data Available</h2>
+                    <p class="clv-empty-sub">The selected package has no structures with valid engineering coordinates yet. Add coordinates to Piles, Rafts, or Pedestals to see them here.</p>
+                </div>
+            </template>
+
+            <!-- SVG Canvas -->
+            <template if:true={showCanvas}>
+                <div class="clv-svg-wrapper" onmousedown={onSvgMouseDown} onmousemove={onSvgMouseMove} onmouseup={onSvgMouseUp} onmouseleave={onSvgMouseUp} onwheel={onSvgWheel}>
+                    <svg class="clv-svg"
+                         lwc:ref="svgCanvas"
+                         xmlns="http://www.w3.org/2000/svg"
+                         width="100%"
+                         height="100%">
+
+                        <!-- Defs: patterns, gradients, clip path -->
+                        <defs>
+                            <pattern id="grid-minor" width={gridMinorSize} height={gridMinorSize} patternUnits="userSpaceOnUse" x={gridOffsetX} y={gridOffsetY}>
+                                <path d={gridMinorPath} fill="none" stroke="#e8ecf0" stroke-width="0.5" opacity="0.7"/>
+                            </pattern>
+                            <pattern id="grid-major" width={gridMajorSize} height={gridMajorSize} patternUnits="userSpaceOnUse" x={gridOffsetX} y={gridOffsetY}>
+                                <rect width={gridMajorSize} height={gridMajorSize} fill="url(#grid-minor)"/>
+                                <path d={gridMajorPath} fill="none" stroke="#c8d0da" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+
+                        <!-- Background grid -->
+                        <rect width="100%" height="100%" fill="url(#grid-major)"/>
+
+                        <!-- Transform group for pan/zoom -->
+                        <g transform={svgTransform}>
+
+                            <!-- ── Raft Polygons ── -->
+                            <template if:true={showRafts}>
+                                <template for:each={visibleRafts} for:item="raft">
+                                    <g key={raft.id} class="clv-raft-group" onclick={onStructureClick} data-id={raft.id} data-type="raft">
+                                        <polygon
+                                            points={raft.svgPoints}
+                                            class={raft.polygonClass}
+                                            stroke-width="2">
+                                        </polygon>
+                                        <text
+                                            x={raft.labelX}
+                                            y={raft.labelY}
+                                            class={raft.labelClass}
+                                            text-anchor="middle"
+                                            dominant-baseline="middle">
+                                            {raft.displayLabel}
+                                        </text>
+                                    </g>
+                                </template>
+                            </template>
+
+                            <!-- ── Pile Circles ── -->
+                            <template if:true={showPiles}>
+                                <template for:each={visiblePiles} for:item="pile">
+                                    <g key={pile.id} class="clv-pile-group" onclick={onStructureClick} data-id={pile.id} data-type="pile">
+                                        <circle
+                                            cx={pile.svgX}
+                                            cy={pile.svgY}
+                                            r={pileRadius}
+                                            class={pile.circleClass}>
+                                        </circle>
+                                        <text
+                                            x={pile.svgX}
+                                            y={pile.labelY}
+                                            class={pile.labelClass}
+                                            text-anchor="middle"
+                                            dominant-baseline="auto">
+                                            {pile.displayLabel}
+                                        </text>
+                                    </g>
+                                </template>
+                            </template>
+
+                            <!-- ── Pedestal Diamonds ── -->
+                            <template if:true={showPedestals}>
+                                <template for:each={visiblePedestals} for:item="ped">
+                                    <g key={ped.id} class="clv-pedestal-group" onclick={onStructureClick} data-id={ped.id} data-type="pedestal">
+                                        <polygon
+                                            points={ped.svgDiamond}
+                                            class={ped.polygonClass}>
+                                        </polygon>
+                                        <text
+                                            x={ped.svgX}
+                                            y={ped.labelY}
+                                            class={ped.labelClass}
+                                            text-anchor="middle"
+                                            dominant-baseline="auto">
+                                            {ped.displayLabel}
+                                        </text>
+                                    </g>
+                                </template>
+                            </template>
+
+                        </g><!-- end transform group -->
+                    </svg>
+
+                    <!-- Zoom level indicator -->
+                    <div class="clv-zoom-badge">{zoomPercent}%</div>
+                </div>
+            </template>
+
+            <!-- ── BOTTOM PANEL: LEGEND + DETAIL ──────────────── -->
+            <template if:true={showCanvas}>
+                <div class="clv-bottom-panel">
+
+                    <!-- Legend -->
+                    <div class="clv-legend">
+                        <span class="clv-legend-title">Legend</span>
+                        <div class="clv-legend-item">
+                            <span class="clv-legend-swatch clv-swatch-pile"></span>
+                            <span>Pile</span>
+                        </div>
+                        <div class="clv-legend-item">
+                            <span class="clv-legend-swatch clv-swatch-raft"></span>
+                            <span>Raft Foundation</span>
+                        </div>
+                        <div class="clv-legend-item">
+                            <span class="clv-legend-swatch clv-swatch-pedestal"></span>
+                            <span>Pedestal</span>
+                        </div>
+                        <div class="clv-legend-item">
+                            <span class="clv-legend-swatch clv-swatch-selected"></span>
+                            <span>Selected</span>
+                        </div>
+                        <div class="clv-legend-item">
+                            <span class="clv-legend-swatch clv-swatch-missing"></span>
+                            <span>No Coordinates</span>
+                        </div>
+                    </div>
+
+                    <!-- Selected Structure Detail Panel -->
+                    <template if:true={hasSelectedStructure}>
+                        <div class="clv-detail-panel">
+                            <div class="clv-detail-header">
+                                <lightning-icon icon-name={selectedIcon} size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <span class="clv-detail-name">{selectedStructure.name}</span>
+                                <button class="clv-detail-close" onclick={clearSelection} title="Close">×</button>
+                            </div>
+                            <dl class="clv-detail-dl">
+                                <template for:each={selectedFields} for:item="field">
+                                    <div key={field.key} class="clv-detail-row">
+                                        <dt class="clv-detail-dt">{field.label}</dt>
+                                        <dd class="clv-detail-dd">{field.value}</dd>
+                                    </div>
+                                </template>
+                            </dl>
+                            <div class="clv-detail-footer">
+                                <lightning-button
+                                    label="Open Record"
+                                    icon-name="utility:new_window"
+                                    icon-position="right"
+                                    variant="brand"
+                                    size="small"
+                                    onclick={openSelectedRecord}>
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </template>
+
+                </div><!-- end bottom-panel -->
+            </template>
+
+        </section><!-- end canvas-section -->
+
+        <!-- ── DATA QUALITY SUMMARY ───────────────────────────── -->
+        <template if:true={hasDataQualityIssues}>
+            <section class="clv-dq-bar">
+                <lightning-icon icon-name="utility:info" size="x-small" class="slds-m-right_x-small clv-dq-icon"></lightning-icon>
+                <span class="clv-dq-text">{dataQualitySummary}</span>
+            </section>
+        </template>
+
+    </div><!-- end workspace -->
+</template>

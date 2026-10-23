@@ -1,0 +1,59 @@
+# NIRMAAN 2.0 — Phase 1 Deployment Report
+
+> **Status**: **DEPLOYED & ACTIVE** in Salesforce org `NirmaanDev`
+> **Deployment Date**: 2026-10-23 | **Components**: 104 | **Component Errors**: 0
+> **Target Org**: `samir.2347454.9752fc7ab8cc@agentforce.com` (Alias: `NirmaanDev`)
+
+---
+
+## Conflict Resolution: `Nirmaan_Project__c`
+To avoid any collision with the pre-existing `Project__c` custom object in your org (which serves your Agile/Project workspace), the NIRMAAN project root object was created as **`Nirmaan_Project__c`**.
+
+All relationships, tabs, app navigation, and permission sets have been mapped cleanly to `Nirmaan_Project__c`.
+
+---
+
+## Deployed Custom Objects (7)
+
+| Object Label | API Name | Description | Key Relationships |
+|:---|:---|:---|:---|
+| **Nirmaan Project** | `Nirmaan_Project__c` | Master construction project record (e.g., NTPC Nabinagar) | Root object |
+| **Construction Package** | `Construction_Package__c` | Unit/sub-area package (e.g., Boiler, TG, Chimney) | Master-Detail to `Nirmaan_Project__c` |
+| **Pile** | `Pile__c` | Bored cast-in-situ concrete pile | Master-Detail to `Construction_Package__c` |
+| **Raft** | `Raft__c` | Raft/mat foundation slab | Master-Detail to `Construction_Package__c` |
+| **Pedestal** | `Pedestal__c` | Foundation pedestal supporting structural columns | Master-Detail to `Construction_Package__c` |
+| **Daily Progress Log** | `Daily_Progress_Log__c` | Daily site progress report (DPR) with manpower & concrete pour logs | Lookup to `Nirmaan_Project__c`, Master-Detail to `Construction_Package__c`, Lookups to Pile, Raft, Pedestal |
+| **Inspection Request** | `Inspection_Request__c` | Formal RFI/WIR QA inspection workflow with signature/approval fields | Master-Detail to `Construction_Package__c`, Lookups to Pile, Raft, Pedestal |
+
+---
+
+## Field Highlights & Metrics
+
+- **55 Custom Fields**:
+  - **Roll-Up Summaries** on `Construction_Package__c`: `Total_Piles__c`, `Completed_Piles__c`, `Total_Rafts__c`, `Completed_Rafts__c`, `Total_Pedestals__c`, `Completed_Pedestals__c`.
+  - **Audit & Identification**: External IDs on `Nirmaan_Project__c.Project_Code__c`, `Pile__c.Pile_Identification_Number__c`, `Raft__c.Raft_Identification_Number__c`, and `Pedestal__c.Pedestal_Identification_Number__c`.
+  - **Quality & Execution**: Batching plant slip tracking, slump tests, concrete volume variances, pour dates, curing dates, cube test strengths, and structural handover sign-offs.
+
+---
+
+## Core Validation Rules Deployed (8)
+
+1. `Nirmaan_Project__c.Actual_End_Requires_Actual_Start`: Actual End Date cannot be set without an Actual Start Date.
+2. `Nirmaan_Project__c.End_Date_After_Start_Date`: Target End Date cannot precede Target Start Date.
+3. `Pile__c.Concreting_Date_Requires_Boring_Complete`: Concreting date cannot be populated until boring is marked completed.
+4. `Raft__c.Actual_Pour_Date_Not_Before_Target`: Actual pour date cannot precede scheduled target date.
+5. `Daily_Progress_Log__c.Concrete_Pour_Requires_Volume`: Activity type Concreting requires non-zero poured volume.
+6. `Daily_Progress_Log__c.DPR_Log_Date_Not_Future`: DPR date cannot be in the future.
+7. `Inspection_Request__c.Defect_Remarks_Required_On_Rejection`: Rejection of inspection requires explicit defect remarks.
+8. `Inspection_Request__c.Element_Lookup_Required_By_Type`: Inspecting a Pile, Raft, or Pedestal enforces populating the respective element lookup.
+
+---
+
+## Application & Security
+
+- **Lightning App**: `NIRMAAN_2` registered with default landing tab `Nirmaan_Project__c` and tabs for all 7 objects.
+- **Custom Tabs**: Custom styled tabs for all 7 objects.
+- **Permission Sets**:
+  - `Nirmaan_Project_Admin`: Full CRUD across all NIRMAAN objects and tab visibility.
+  - `Nirmaan_Site_Engineer`: Read/Edit on packages & foundations, verification authority on DPRs and Inspections.
+  - `Nirmaan_Field_Supervisor`: Draft DPR entry and inspection request submission authority.
